@@ -46,7 +46,7 @@
         v-if="isMask"
         modelValue="modelValue"
       />
-
+<!-- 
       <div
         class="flex text-xl absolute ltr:right-[14px] rtl:left-[14px] top-1/2 -translate-y-1/2"
       >
@@ -66,18 +66,18 @@
         <span v-if="validate" class="text-success-500">
           <Icon icon="bi:check-lg" />
         </span>
-      </div>
+      </div> -->
     </div>
 
     <span
       v-if="error"
-      class="mt-2"
+      class="mt-0"
       :class="
         msgTooltip
           ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
-          : ' text-danger-500 block text-sm'
+          : ' text-danger-500 block text-sm text-[10px]'
       "
-      >{{ error }}</span
+      > {{ error }}</span
     >
     <span
       v-if="validate"

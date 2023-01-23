@@ -7,10 +7,10 @@
   >
     <label
       v-if="label"
-      :class="`${classLabel} inline-block input-label `"
+      :class="`${classLabel} ltr:inline-block rtl:block input-label mb-0`"
       :for="name"
     >
-      {{ label }}</label
+       {{ label }}</label
     >
     <div class="relative">
       <div v-if="!$slots.default">
@@ -23,6 +23,7 @@
           :validate="validate"
           :multiple="multiple"
           :options="options"
+          v-model="valSelected"
         >
         </vSelect>
       </div>
@@ -40,11 +41,11 @@
 
     <span
       v-if="error"
-      class="mt-2"
+      class="mt-0"
       :class="
         msgTooltip
           ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
-          : ' text-danger-500 block text-sm'
+          : ' text-danger-500 block text-sm text-[10px] '
       "
       >{{ error }}</span
     >
@@ -54,7 +55,7 @@
       :class="
         msgTooltip
           ? ' inline-block bg-success-500 text-white text-[10px] px-2 py-1 rounded'
-          : ' text-success-500 block text-sm'
+          : ' text-success-500 block text-sm text-[10px] '
       "
       >{{ validate }}</span
     >
@@ -69,6 +70,8 @@
 import vSelect from "vue-select";
 import "vue-select/dist/vue-select.css";
 import Icon from "@/components/Icon";
+import {computed} from 'vue';
+
 export default {
   components: {
     vSelect,
@@ -134,6 +137,19 @@ export default {
       type: Array,
     },
   },
+
+
+  setup(props, { emit }) { 
+    const valSelected = computed({ 
+      get: () => props.modelValue,
+      set: (value) => emit('update:modelValue', value)
+    }) 
+
+    return { 
+      valSelected,
+    } 
+  }
+
 };
 </script>
 <style lang="scss">

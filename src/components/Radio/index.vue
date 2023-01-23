@@ -26,7 +26,7 @@
       >
       </span>
       <span
-        class="text-slate-500 dark:text-slate-400 text-sm leading-6"
+        class="text-slate-500 dark:text-slate-400 text-sm leading-6 ml-1"
         v-if="label"
       >
         {{ label }}
