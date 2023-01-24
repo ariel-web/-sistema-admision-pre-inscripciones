@@ -99,6 +99,8 @@
   </Card>
 </template>
 <script setup>
+
+import axios from "axios";
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
 
@@ -150,11 +152,33 @@ const form_dos = ref({
 
 const form_tres = ref({});
 
-const submit = () => {
+const submit = async () => {
   console.log(form_tres.value);
-  
+  console.log(form_dos.value);
+  console.log(form_uno.value);
+
+  if (stepNumber.value == 2) {
+    console.log('enviando a la vase de datos');
+    let res = await axios.post('http://sistema-admision-back.test/api/pre-inscripcion/guardar', setFormData() );
+    console.log(res);
+  }
   stepNumber.value++;
 }
+
+
+const setFormData = () =>{
+  let data = new FormData();
+  data.append('datos_postulante', JSON.stringify(form_uno.value));
+  data.append('datos_colegio', JSON.stringify(form_dos.value) );
+
+  data.append('plan_estudio', JSON.stringify(form_tres.value.plan_estudio) );
+  data.append('pago_1',form_tres.value.pago1 );
+  data.append('pago_2',form_tres.value.pago2 );
+  data.append('certificado',form_tres.value.certificado );
+
+  return data;
+}
+
 
 const prev = () => {
   stepNumber.value--;
