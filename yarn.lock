@@ -4412,11 +4412,6 @@ file-selector@^0.2.4:
   dependencies:
     tslib "^2.0.3"
 
-file-upload-with-preview@^5.0.8:
-  version "5.0.8"
-  resolved "https://registry.yarnpkg.com/file-upload-with-preview/-/file-upload-with-preview-5.0.8.tgz#318e2527aef3c4491103fb53358ec1df30588e76"
-  integrity sha512-tPvPMsB21rmKQEsC08yo19MKQunRUbkChU4NRiumt/QjIOMproDZ8dmhC2y+aTZw4VIRa8MBbH3YVuEgFwGe4A==
-
 fill-range@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-7.0.1.tgz#1919a6a7c75fe38b2c7c77e5198535da9acdda40"
