@@ -56,6 +56,7 @@ const data_colegios = ref([]);
 watch(cole_ubucacion, async (newVal) => {
     let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-colegios/' + newVal);
     data_colegios.value = res.data.datos;
+    FormData.value.cole_ubigeo = newVal;
 })
 
 const AddTutor = () => {
