@@ -1,6 +1,5 @@
 <template>
-
-
+    
     <Textinput label="Primer Apellido" type="text" placeholder="Primer Apellido" v-model="FormData.post_ap_primero" />
 
     <Textinput label="Segundo Apellido" type="text" placeholder="Segundo Apellido" v-model="FormData.post_ap_segundo" />

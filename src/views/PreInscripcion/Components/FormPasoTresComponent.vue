@@ -1,7 +1,5 @@
 <template>
-
     <VueSelect :options="data_programa_estudios" label="Seleccione el programa de " v-model="FormData.plan_estudio" />
-
     <div class="grid md:grid-cols-2 grid-cols-1 gap-5">
         <Card subtitle="Comprobante de pago">
             <Fileinput preview name="preview" @change="previewPago" />
@@ -14,15 +12,28 @@
     <Card subtitle="Certificado de estudios">
         <Fileinput name="preview3" @change="previewCertificadoPdf" />
     </Card>
-
 </template>
 
 <script setup>
 import axios from 'axios';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted,  watch, ref } from 'vue';
 import VueSelect from '@/components/Select/VueSelect.vue';
 import Card from '@/components/Card';
 import Fileinput from '@/components/Fileinput';
+import { TransitionRoot, TransitionChild, Dialog, DialogPanel } from "@headlessui/vue";
+
+
+const isOpen = ref(props.activeModal);
+
+// open
+const openModal = () => {
+    isOpen.value = !isOpen.value;
+};
+// close
+const closeModal = () => {
+    isOpen.value = false;
+};
+
 
 const props = defineProps({
     modelValue: Object,
@@ -34,8 +45,6 @@ const FormData = computed({
     set: (value) => emit('update:modelValue', value),
 
 }, { deep: true });
-
-
 
 const previewPago = (event) => {
     FormData.value.pago1 = event.target.files[0];
@@ -59,5 +68,11 @@ onMounted(async () => {
     data_programa_estudios.value = res.data.datos;
 });
 const data_programa_estudios = ref([]);
+
+watch(props.modelValue, async (newVal) => {
+    if(newVal == null) return;
+    console.log("Abrir Modal");
+
+});
 
 </script>
