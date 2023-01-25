@@ -1,7 +1,7 @@
 <template>
     <div class="app-layout">
         <header class="app-layout__header">
-            <p>header</p>
+          
         </header>
 
         <main class="app-layout__main">
@@ -9,7 +9,7 @@
         </main>
 
         <footer class="app-layout__footer">
-            <p>footer</p>
+         
         </footer>
     </div>
 
