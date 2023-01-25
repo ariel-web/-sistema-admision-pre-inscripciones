@@ -91,7 +91,7 @@
 
           <div class="mt-10" :class="stepNumber > 0 ? 'flex justify-between' : ' text-right'">
             <Button @click.prevent="prev()" text="Atras" btnClass="btn-dark" v-if="stepNumber !== 0" />
-            <Button :text="stepNumber !== this.steps.length - 1 ? 'Siguiente' : 'Guardar'" btnClass="btn-primary" />
+            <Button :text="stepNumber !== steps.length - 1 ? 'Siguiente' : 'Guardar'" btnClass="btn-primary" />
           </div>
         </form>
       </div>
