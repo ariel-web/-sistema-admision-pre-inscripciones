@@ -1,5 +1,10 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
+
+  devServer: {
+    disableHostCheck: true
+  },
+
   transpileDependencies: true,
   lintOnSave: false,
 
@@ -7,7 +12,4 @@ module.exports = defineConfig({
     config.performance.maxEntrypointSize(4000000).maxAssetSize(4000000);
   },
 
-  devServer: {
-    disableHostCheck: true
-  }
 });
