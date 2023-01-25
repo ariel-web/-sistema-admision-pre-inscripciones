@@ -14,7 +14,7 @@
         </div>
         <Textinput v-model="numDocumento" label="N° Documento" name="h_Fullname" type="text" class="mb-4"
             placeholder="N° Documento" />
-        <Button text="Iniciar Postulación" btnClass=" block-btn" type="button" @click="IrDatosPostulante" />
+        <Button text="Iniciar Postulación" btnClass="btn-black block-btn" type="button" @click="IrDatosPostulante" />
     </Card>
 </template>
 <script setup>

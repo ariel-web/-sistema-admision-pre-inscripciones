@@ -73,7 +73,6 @@
 
               <FormPasoTresComponent v-model="form_tres" />
 
-
             </div>
           </div>
 
