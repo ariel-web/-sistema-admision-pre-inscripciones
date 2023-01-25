@@ -54,7 +54,7 @@ const previewCertificadoPdf = (event) => {
 }
 
 onMounted(async () => {
-    let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-programa-estudios');
+    let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-programa-estudios');
     console.log(res.data);
     data_programa_estudios.value = res.data.datos;
 });

@@ -159,7 +159,7 @@ const submit = async () => {
 
   if (stepNumber.value == 2) {
     console.log('enviando a la vase de datos');
-    let res = await axios.post('http://sistema-admision-back.test/api/pre-inscripcion/guardar', setFormData() );
+    let res = await axios.post('https://plankton-app-848ak.ondigitalocean.app/api/pre-inscripcion/guardar', setFormData() );
     console.log(res);
   }
   stepNumber.value++;

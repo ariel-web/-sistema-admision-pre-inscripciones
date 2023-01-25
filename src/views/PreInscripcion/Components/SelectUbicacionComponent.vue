@@ -51,17 +51,17 @@ watch(distrito, async (newVal) => {
 });
 
 const getDepartamentos = async () => {
-    let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-departamentos');
+    let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-departamentos');
     data_departamentos.value = res.data.datos;
 }
 
 const getProvincias = async () => {
-    let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-provincias/' + departamento.value.value);
+    let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-provincias/' + departamento.value.value);
     data_provincias.value = res.data.datos;
 }
 
 const getDistritos = async () => {
-    let res = await axios.get('http://sistema-admision-back.test/api/select-data/get-distritos/' + departamento.value.value + provincia.value.value);
+    let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-distritos/' + departamento.value.value + provincia.value.value);
     data_distritos.value = res.data.datos;
 }
 
