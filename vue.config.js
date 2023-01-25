@@ -1,7 +1,8 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   devServer: {
-    disableHostCheck: true
+    //disableHostCheck: true,
+    proxy: 'https://plankton-app-848ak.ondigitalocean.app/',
   },
   transpileDependencies: true,
   lintOnSave: false,
