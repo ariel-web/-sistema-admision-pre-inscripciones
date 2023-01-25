@@ -1,6 +1,6 @@
 <template>
 
-    <Card title="Pre Inscripcion" subtitle="Ingrese el numoer de documento de identidad" imaClass="rounded-md" noborder>
+    <Card title="Pre Inscripcion" subtitle="Ingrese el número de documento de identidad" imaClass="rounded-md" noborder>
 
 
         <div class="flex flex-wrap mb-4">
@@ -36,11 +36,11 @@ const IrDatosPostulante = () => {
 
     if (picked1.value == 'A') {
         if (numDocumento.value.length != 8) {
-            console.log('El numero de DNi no es vaido');
+            console.log('El numero de DNI no es vaido');
 
             toast.success(" Login  successfully", {
-            timeout: 2000,
-          });
+                timeout: 2000,
+            });
 
             return;
         }
