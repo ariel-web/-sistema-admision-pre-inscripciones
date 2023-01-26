@@ -15,12 +15,12 @@
 </template>
 
 <script setup>
-import axios from 'axios';
-import { computed, onMounted,  watch, ref } from 'vue';
+import { computed, onMounted, watch, ref } from 'vue';
 import VueSelect from '@/components/Select/VueSelect.vue';
 import Card from '@/components/Card';
 import Fileinput from '@/components/Fileinput';
 import { TransitionRoot, TransitionChild, Dialog, DialogPanel } from "@headlessui/vue";
+import http from '@/helpers/http';
 
 
 const isOpen = ref(props.activeModal);
@@ -63,14 +63,14 @@ const previewCertificadoPdf = (event) => {
 }
 
 onMounted(async () => {
-    let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/select-data/get-programa-estudios');
+    let res = await http.get('/select-data/get-programa-estudios');
     console.log(res.data);
     data_programa_estudios.value = res.data.datos;
 });
 const data_programa_estudios = ref([]);
 
 watch(props.modelValue, async (newVal) => {
-    if(newVal == null) return;
+    if (newVal == null) return;
     console.log("Abrir Modal");
 
 });

@@ -1,9 +1,9 @@
 <template>
   <div
     class="fromGroup relative"
-    :class="`${error ? 'has-error' : ''}  ${horizontal ? 'flex' : ''}  ${
-      validate ? 'is-valid' : ''
-    } `"
+    :class="`${error || error_msg ? 'has-error' : ''}  ${
+      horizontal ? 'flex' : ''
+    }  ${validate ? 'is-valid' : ''} `"
   >
     <label
       v-if="label"
@@ -23,12 +23,13 @@
           hasicon ? 'ltr:pr-10 rtl:pl-10' : ''
         } `"
         :value="modelValue"
-        @input="$emit('update:modelValue', $event.target.value)"
+        @input="validateRules($event.target.value)"
         :error="error"
         :id="name"
         :readonly="isReadonly"
         :disabled="disabled"
         :validate="validate"
+        autocomplete="off"
         v-if="!isMask"
       />
       <cleave
@@ -46,38 +47,18 @@
         v-if="isMask"
         modelValue="modelValue"
       />
-<!-- 
-      <div
-        class="flex text-xl absolute ltr:right-[14px] rtl:left-[14px] top-1/2 -translate-y-1/2"
-      >
-        <span
-          v-if="hasicon"
-          @click="toggleType"
-          class="cursor-pointer text-secondary-500"
-        >
-          <Icon icon="heroicons-outline:eye" v-if="types === 'password'" />
-          <Icon icon="heroicons-outline:eye-off" v-else />
-        </span>
-
-        <span v-if="error" class="text-danger-500">
-          <Icon icon="heroicons-outline:information-circle" />
-        </span>
-
-        <span v-if="validate" class="text-success-500">
-          <Icon icon="bi:check-lg" />
-        </span>
-      </div> -->
     </div>
 
     <span
-      v-if="error"
+      v-if="error || error_msg"
       class="mt-0"
       :class="
         msgTooltip
           ? ' inline-block bg-danger-500 text-white text-[10px] px-2 py-1 rounded'
           : ' text-danger-500 block text-sm text-[10px]'
       "
-      > {{ error }}</span
+    >
+      {{ error ? error : error_msg }}</span
     >
     <span
       v-if="validate"
@@ -99,12 +80,18 @@
 <script>
 import Icon from "@/components/Icon";
 import Cleave from "vue-cleave-component";
+import { isNumber, validateSimple } from "@/helpers/validations";
+
 export default {
   components: { Icon, Cleave },
   props: {
+    rules: {
+      default: false,
+    },
+
     placeholder: {
       type: String,
-      default: "Search",
+      default: "",
     },
     label: {
       type: String,
@@ -173,6 +160,8 @@ export default {
   data() {
     return {
       types: this.type,
+      error_msg: this.error,
+      input_valid: true,
     };
   },
 
@@ -180,6 +169,14 @@ export default {
     toggleType() {
       // toggle the type of the input field
       this.types = this.types === "text" ? "password" : "text";
+    },
+    validateRules(e) {
+      this.$emit("update:modelValue", e);
+      if (this.rules) {
+        let vali = validateSimple({ input: e, ...this.rules });
+        this.error_msg = vali.error_msg;
+        this.$emit("valid", !vali.error);
+      }
     },
   },
 };
