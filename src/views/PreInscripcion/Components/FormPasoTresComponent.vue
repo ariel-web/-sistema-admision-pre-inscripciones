@@ -8,7 +8,6 @@
             <Fileinput preview name="preview2" @change="previewCertificado" />
         </Card>
     </div>
-
     <Card subtitle="Certificado de estudios">
         <Fileinput name="preview3" @change="previewCertificadoPdf" />
     </Card>
@@ -19,9 +18,7 @@ import { computed, onMounted, watch, ref } from 'vue';
 import VueSelect from '@/components/Select/VueSelect.vue';
 import Card from '@/components/Card';
 import Fileinput from '@/components/Fileinput';
-import { TransitionRoot, TransitionChild, Dialog, DialogPanel } from "@headlessui/vue";
 import http from '@/helpers/http';
-
 
 const isOpen = ref(props.activeModal);
 

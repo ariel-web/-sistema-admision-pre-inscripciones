@@ -1,7 +1,7 @@
 <template>
   <Textinput
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.primer_ap = $event"
     label="Primer Apellido"
     type="text"
     placeholder=""
@@ -10,7 +10,7 @@
 
   <Textinput
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.segundo_ap = $event"
     label="Segundo Apellido"
     type="text"
     placeholder=""
@@ -19,7 +19,7 @@
 
   <Textinput
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.nombres = $event"
     label="Nombres"
     type="text"
     placeholder=""
@@ -28,7 +28,7 @@
 
   <Textinput
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.dni = $event"
     label="DNI"
     type="text"
     placeholder=""
@@ -48,9 +48,33 @@ const form_valid = ref(true);
 
 const emit = defineEmits(["update:modelValue", "valid"]);
 
-watch(form_valid, (value) => {
-  emit("valid", value);
+
+
+const inputValid = ref({
+  primer_ap :false,
+  segundo_ap :false,
+  nombres :false,
+  dni :false
+
 });
+
+watch(
+  inputValid,
+  (value) => {
+    if (
+      value.primer_ap
+      && value.segundo_ap 
+      && value.nombres 
+      && value.dni 
+    ) {
+      emit("valid", true);
+    } else {
+      emit("valid", false);
+    }
+  },
+  { deep: true }
+);
+
 
 const FormData = computed(
   {
