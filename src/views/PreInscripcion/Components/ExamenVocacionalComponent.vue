@@ -1,93 +1,205 @@
 <template>
-    <div>
-      <label
-        class="flex items-center"
-        :class="disabled ? ' cursor-not-allowed opacity-50' : 'cursor-pointer'"
-      >
-        <input
-          type="radio"
-          class="hidden"
-          :disabled="disabled"
-          :name="name"
-          @change="onChange"
-          :value="value"
-          v-model="localValue"
-          v-bind="$attrs"
-        />
+  <div>
+      <div v-for="(item, index) in preguntas" :key="item.id" style="margin-bottom: 20px;">
+        <card>          
+          <div style="margin-bottom: 20px;"> <h6> {{ item.pregunta }} </h6> </div>
+          
+          <div v-if="item.url !== null" style="display: flex; justify-content: center;">            
+            <img :src="item.url"  class="rounded-md mb-6"/>
+          </div>
+
+
+          <div v-for="(ite) in item.respuestas" :key="ite.id">
+              <div v-if="index === 0">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res1"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 1">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res2"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 2">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res3"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 3">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res4"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 4">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res5"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 5">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res6"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 6">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res7"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 7">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res8"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 8">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res9"
+                  :value="ite"
+                />
+              </div>
+              <div v-if="index === 9">
+                <Radio
+                  :label="ite.respuesta"
+                  class="mb-5"
+                  name="jorina"
+                  v-model="res.res10"
+                  :value="ite"
+                />
+              </div>
+           </div>
+
+        </card>
+      </div> 
+      
+
+      <Button text="Dark" btnClass="btn-dark"  @click="GuardarExamen"/>
+      <div>
+      <!-- <div class="grid grid-cols-1 gap-5" v-for="(item, index) in preguntas" :key="item.id">
+          <Pregunta :pregunta="item.pregunta"  :items="item.respuestas" />
+      </div> -->
+      </div>
+  </div>
+</template>
+
+<script>
+import Card from "@/components/Card";
+import Radio from "@/components/Radio";
+import Image from '@/components/Image';
+import Button from "@/components/Button";
+import { defineComponent, ref } from "vue";
+
+import {
+TransitionRoot,
+TransitionChild,
+Dialog,
+DialogPanel,
+} from "@headlessui/vue";
+
+// import { advancedTable } from "@/constant/basic-tablle-data";
+import axios from 'axios';
+//import Pregunta from './pregunta.vue'
+
+export default {
+  components: {
+    Card,
+    Radio,
+    Image,
+    Button,
+    TransitionRoot,
+    TransitionChild,
+    Dialog,
+    DialogPanel,
+
+      //Pregunta
+  },
+
+data() {
+  return {
+    preguntas:[],
+    resps:[],
+    res:{
+      res1:null,
+      res2:null,
+      res3:null,
+      res4:null,
+      res5:null,
+      res6:null,
+      res7:null,
+      res8:null,
+      res9:null,
+      res10:null
+
+    }
+  }
+},
+methods:{
   
-        <span
-          :class="
-            localValue === value
-              ? activeClass +
-                ' ring-[6px]  ring-inset ring-offset-2 dark:ring-offset-slate-600  dark:ring-offset-4 border-slate-700'
-              : 'border-slate-400 dark:border-slate-600 dark:ring-slate-700'
-          "
-          class="h-[18px] w-[18px] rounded-full border inline-flex bg-white dark:bg-slate-500 ltr:mr-3 rtl:ml-3 relative transition-all duration-150"
-        >
-        </span>
-        <span
-          class="text-slate-500 dark:text-slate-400 text-sm leading-6 ml-1"
-          v-if="label"
-        >
-          {{ label }}
-        </span>
-      </label>
-    </div>
-  </template>
-  <script>
-  import { computed, defineComponent, ref } from "vue";
-  export default defineComponent({
-    name: "Radio",
-    inheritAttrs: false,
-    props: {
-      label: {
-        type: String,
-      },
-      checked: {
-        type: Boolean,
-        default: false,
-      },
-      disabled: {
-        type: Boolean,
-        default: false,
-      },
-      name: {
-        type: String,
-        default: "checkbox",
-      },
-      activeClass: {
-        type: String,
-        default: "ring-slate-500 dark:ring-slate-400",
-      },
-      value: {
-        type: null,
-      },
-      modelValue: {
-        type: null,
-      },
-    },
-    emits: {
-      "update:modelValue": (newValue) => ({
-        modelValue: newValue,
-      }),
-    },
-  
-    setup(props, context) {
-      const ck = ref(props.checked);
-  
-      // on change event
-      const onChange = () => {
-        ck.value = !ck.value;
-      };
-  
-      const localValue = computed({
-        get: () => props.modelValue,
-        set: (newValue) => context.emit("update:modelValue", newValue),
-      });
-  
-      return { localValue, ck, onChange };
-    },
-  });
-  </script>
-  <style lang=""></style>
-  
+  async getPreguntas(){
+    let res = await axios.get('https://plankton-app-848ak.ondigitalocean.app/api/preguntas');
+    this.preguntas = res.data.datos;
+  },
+
+  async GuardarExamen(){
+    let res = await axios.post('https://plankton-app-848ak.ondigitalocean.app/api/guardar-examen',this.res);
+  },
+
+},
+
+// computed:mapGetters(['allRespuestas']),
+mounted() {
+  this.getPreguntas();
+  // this.fetchrespuestas(); 
+},
+
+setup(props) {
+  const isOpen = ref(props.activeModal);
+
+  const openModal = () => {
+      isOpen.value = !isOpen.value;
+  };
+  // close
+  const closeModal = () => {
+      isOpen.value = false;
+  };
+
+
+  return { closeModal, openModal, isOpen };
+},
+
+};
+
+</script>
