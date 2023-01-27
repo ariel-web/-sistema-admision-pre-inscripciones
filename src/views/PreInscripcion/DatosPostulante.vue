@@ -180,7 +180,7 @@ let steps = [
 ];
 
 const toast = useToast();
-let stepNumber = ref(3);
+let stepNumber = ref(0);
 
 const tutor = {
   tut_primer_ap: "",
