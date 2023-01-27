@@ -1,47 +1,48 @@
 <template>
-  <Card title="Pre inscripción">
+  <Card :title="'Pre inscripción - ' + codigo_u">
     <div class="min-w-[80vw]">
-      <div class="flex z-[5] items-center relative justify-center md:mx-8">
-        <div
-          class="relative z-[1] items-center item flex flex-start flex-1 last:flex-none group"
-          v-for="(item, i) in steps"
-          :key="i"
-        >
+      <template v-if="stepNumber != 3">
+        <div class="flex z-[5] items-center relative justify-center md:mx-8">
           <div
-            :class="`   ${
-              stepNumber >= i
-                ? 'bg-slate-900 text-white ring-slate-900 ring-offset-2 dark:ring-offset-slate-500 dark:bg-slate-900 dark:ring-slate-900'
-                : 'bg-white ring-slate-900 ring-opacity-70  text-slate-900 dark:text-slate-300 dark:bg-slate-600 dark:ring-slate-600 text-opacity-70'
-            }`"
-            class="transition duration-150 icon-box md:h-12 md:w-12 h-7 w-7 rounded-full flex flex-col items-center justify-center relative z-[66] ring-1 md:text-lg text-base font-medium"
+            class="relative z-[1] items-center item flex flex-start flex-1 last:flex-none group"
+            v-for="(item, i) in steps"
+            :key="i"
           >
-            <span v-if="stepNumber <= i"> {{ i + 1 }}</span>
-            <span v-else class="text-3xl">
-              <Icon icon="bx:check-double" />
-            </span>
-          </div>
+            <div
+              :class="`   ${
+                stepNumber >= i
+                  ? 'bg-slate-900 text-white ring-slate-900 ring-offset-2 dark:ring-offset-slate-500 dark:bg-slate-900 dark:ring-slate-900'
+                  : 'bg-white ring-slate-900 ring-opacity-70  text-slate-900 dark:text-slate-300 dark:bg-slate-600 dark:ring-slate-600 text-opacity-70'
+              }`"
+              class="transition duration-150 icon-box md:h-12 md:w-12 h-7 w-7 rounded-full flex flex-col items-center justify-center relative z-[66] ring-1 md:text-lg text-base font-medium"
+            >
+              <span v-if="stepNumber <= i"> {{ i + 1 }}</span>
+              <span v-else class="text-3xl">
+                <Icon icon="bx:check-double" />
+              </span>
+            </div>
 
-          <div
-            class="absolute top-1/2 h-[2px] w-full"
-            :class="
-              stepNumber >= i
-                ? 'bg-slate-900 dark:bg-slate-900'
-                : 'bg-[#E0EAFF] dark:bg-slate-700'
-            "
-          ></div>
-          <div
-            class="absolute top-full text-base md:leading-6 mt-3 transition duration-150 md:opacity-100 opacity-0 group-hover:opacity-100"
-            :class="
-              stepNumber >= i
-                ? ' text-slate-900 dark:text-slate-300'
-                : 'text-slate-500 dark:text-slate-300 dark:text-opacity-40'
-            "
-          >
-            <span class="w-max">{{ item.title }}</span>
+            <div
+              class="absolute top-1/2 h-[2px] w-full"
+              :class="
+                stepNumber >= i
+                  ? 'bg-slate-900 dark:bg-slate-900'
+                  : 'bg-[#E0EAFF] dark:bg-slate-700'
+              "
+            ></div>
+            <div
+              class="absolute top-full text-base md:leading-6 mt-3 transition duration-150 md:opacity-100 opacity-0 group-hover:opacity-100"
+              :class="
+                stepNumber >= i
+                  ? ' text-slate-900 dark:text-slate-300'
+                  : 'text-slate-500 dark:text-slate-300 dark:text-opacity-40'
+              "
+            >
+              <span class="w-max">{{ item.title }}</span>
+            </div>
           </div>
         </div>
-      </div>
-
+      </template>
       <div
         class="conten-box mt-14 border-t border-slate-100 dark:border-slate-700 -mx-6 px-6 pt-6"
       >
@@ -79,7 +80,7 @@
 
               <FormPasoDosComponent
                 v-model="form_dos"
-                @valid="form_valid = $event"
+                @valid="form_valid_dos = $event"
               />
 
               <div
@@ -93,8 +94,8 @@
                 />
                 <Button
                   text="Siguiente"
-                  btnClass="btn-primary"
-                  :isDisabled="!form_valid"
+                  btnClass="btn-dark"
+                  :isDisabled="!form_valid_dos"
                 />
               </div>
             </div>
@@ -128,9 +129,17 @@
           <div v-if="stepNumber === 3">
             <div class="grid grid-cols-1 gap-5">
               <div class="">
-                <h4 class="text-base text-slate-800 dark:text-slate-300 mb-6">
+                <h4
+                  class="text-base text-slate-800 dark:text-slate-300 mb-6 text-center pa-4"
+                >
                   FELICITACIONES
                 </h4>
+                <p
+                  class="text-base text-slate-800 dark:text-slate-300 mb-6 text-center pa-4"
+                >
+                  PRE INSCRIPCION EXITOSA
+                </p>
+                <H2 class=" mb-6 text-center pa-4">Codigo: {{ codigo_u }}</H2>
               </div>
             </div>
           </div>
@@ -153,6 +162,7 @@ import FormPasoTresComponent from "./Components/FormPasoTresComponent.vue";
 import http from "@/helpers/http";
 
 const form_valid = ref(false);
+const form_valid_dos = ref(false);
 
 let steps = [
   {
@@ -170,7 +180,7 @@ let steps = [
 ];
 
 const toast = useToast();
-let stepNumber = ref(0);
+let stepNumber = ref(3);
 
 const tutor = {
   tut_primer_ap: "",
@@ -213,6 +223,7 @@ const setFormData = () => {
   data.append("pago_1", form_tres.value.pago1);
   data.append("pago_2", form_tres.value.pago2);
   data.append("certificado", form_tres.value.certificado);
+  data.append("codigo_u", codigo_u.value);
 
   return data;
 };
@@ -220,4 +231,12 @@ const setFormData = () => {
 const prev = () => {
   stepNumber.value--;
 };
+
+const codigo_u = ref("");
+const init = async () => {
+  let res = await http.get("/get-codigo");
+  codigo_u.value = res.data.codigo;
+};
+
+init();
 </script>

@@ -87,7 +87,6 @@
             <Fileinput preview name="preview2" @change="previewCertificado" />
         </Card>
     </div>
-
     <Card subtitle="Certificado de estudios">
         <Fileinput name="preview3" @change="previewCertificadoPdf" />
     </Card>
@@ -101,7 +100,6 @@ import Fileinput from '@/components/Fileinput';
 import http from '@/helpers/http';
 import {  TransitionRoot, TransitionChild, Dialog,  DialogPanel } from "@headlessui/vue";
 import ExamenVocacionalComponent from './ExamenVocacionalComponent.vue';
-
 
 const props = defineProps({
     modelValue: Object,

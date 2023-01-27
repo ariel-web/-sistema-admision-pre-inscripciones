@@ -5,7 +5,7 @@
     placeholder=""
     v-model="FormData.cole_pais"
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.pais = $event"
   />
 
   <SelectUbicacionComponent v-model="cole_ubucacion" />
@@ -50,7 +50,7 @@
       </div>
       <TutoresComponent
         v-model="FormData.tutores[index]"
-        @valid="form_valid = $event"
+        @valid="inputValid.tutores = $event"
       />
     </div>
   </div>
@@ -73,9 +73,26 @@ const form_valid = ref(true);
 
 const emit = defineEmits(["update:modelValue", "valid"]);
 
-watch(form_valid, (value) => {
-  emit("valid", value);
+const inputValid = ref({
+  tutores: false,
+  pais: false,
+
 });
+
+watch(
+  inputValid,
+  (value) => {
+    if (
+      value.tutores  &&
+      value.pais 
+    ) {
+      emit("valid", true);
+    } else {
+      emit("valid", false);
+    }
+  },
+  { deep: true }
+);
 
 const FormData = computed(
   {

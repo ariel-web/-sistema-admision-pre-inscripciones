@@ -5,7 +5,7 @@
     placeholder="Primer Apellido"
     v-model="FormData.post_ap_primero"
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.ap_primero = $event"
   />
 
   <Textinput
@@ -14,7 +14,7 @@
     placeholder="Segundo Apellido"
     v-model="FormData.post_ap_segundo"
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.ap_segundo = $event"
   />
 
   <Textinput
@@ -23,7 +23,7 @@
     placeholder="Nombre(s)"
     v-model="FormData.post_nombres"
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.nombres = $event"
   />
 
   <Textinput
@@ -32,7 +32,7 @@
     placeholder="Numero de Celular"
     v-model="FormData.post_celular"
     :rules="{ long: 9 }"
-    @valid="form_valid = $event"
+    @valid="inputValid.celular = $event"
     @keypress="isNumber"
   />
 
@@ -42,7 +42,7 @@
     placeholder="Correo Electronico"
     v-model="FormData.post_correo"
     :rules="{ email: true }"
-    @valid="form_valid = $event"
+    @valid="inputValid.correo = $event"
   />
 
   <VueSelect
@@ -64,7 +64,7 @@
     placeholder=""
     v-model="FormData.post_direccion_actual"
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.direccion_actual = $event"
   />
 
   <Textinput
@@ -73,7 +73,7 @@
     placeholder=""
     v-model="FormData.post_fecha_nacimiento"
     :rules="{}"
-    @valid="form_valid = $event"
+    @valid="inputValid.fecha_nacimiento = $event"
   />
 
   <Textinput
@@ -82,7 +82,7 @@
     placeholder="Número de ubigeo"
     v-model="FormData.post_numero_ubigeo"
     :rules="{ long: 6 }"
-    @valid="form_valid = $event"
+    @valid="inputValid.numero_ubigeo = $event"
     @keypress="isNumber"
   />
 
@@ -100,6 +100,7 @@
     type="date"
     placeholder="Año de egreso"
     v-model="FormData.post_anio_egreso"
+    required
   />
 </template>
 
@@ -119,9 +120,40 @@ const form_valid = ref(true);
 
 const emit = defineEmits(["update:modelValue", "valid"]);
 
-watch(form_valid, (value) => {
-  emit("valid", value);
+
+const inputValid = ref({
+  ap_primero: false,
+  ap_segundo: false,
+  nombres: false,
+  celular: false,
+  correo: false,
+  direccion_actual: false,
+  fecha_nacimiento: false,
+  numero_ubigeo: false,
+  //anio_egreso: false,
 });
+
+watch(
+  inputValid,
+  (value) => {
+    if (
+      value.ap_primero == true 
+       && value.ap_segundo == true 
+       && value.nombres == true 
+       && value.celular == true 
+       && value.correo == true 
+       && value.direccion_actual == true 
+       && value.fecha_nacimiento == true 
+       && value.numero_ubigeo == true
+      //value.anio_egreso
+    ) {
+      emit("valid", true);
+    } else {
+      emit("valid", false);
+    }
+  },
+  { deep: true }
+);
 
 const optcion_sexo = [
   {
