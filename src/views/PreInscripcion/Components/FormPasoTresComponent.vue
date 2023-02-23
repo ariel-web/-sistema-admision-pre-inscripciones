@@ -76,8 +76,6 @@
 
 
 
-
-
     <VueSelect :options="data_programa_estudios" label="Seleccione el programa de " v-model="FormData.plan_estudio" />
     <div class="grid md:grid-cols-2 grid-cols-1 gap-5">
         <Card subtitle="Comprobante de pago">
@@ -98,7 +96,7 @@ import VueSelect from '@/components/Select/VueSelect.vue';
 import Card from '@/components/Card';
 import Fileinput from '@/components/Fileinput';
 import http from '@/helpers/http';
-import {  TransitionRoot, TransitionChild, Dialog,  DialogPanel } from "@headlessui/vue";
+import { TransitionRoot, TransitionChild, Dialog,  DialogPanel } from "@headlessui/vue";
 import ExamenVocacionalComponent from './ExamenVocacionalComponent.vue';
 
 const props = defineProps({
@@ -147,11 +145,17 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['update:modelValue']);
+
+function submitForm(email, password) {
+  emit('submit', { email, password })
+}
+
 const FormData = computed({
     get: () => props.modelValue,
     set: (value) => emit('update:modelValue', value),
-
 }, { deep: true });
+
+
 
 const previewPago = (event) => {
     FormData.value.pago1 = event.target.files[0];
